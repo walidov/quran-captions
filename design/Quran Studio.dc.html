@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<template id="__bundler_thumbnail" data-bg-color="#1F8A5B">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#1F8A5B"/>
+    <rect x="360" y="250" width="480" height="300" rx="24" fill="#ffffff" opacity="0.12"/>
+    <text x="600" y="470" font-family="Amiri, serif" font-size="240" fill="#ffffff" text-anchor="middle">ق</text>
+  </svg>
+</template>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&family=Markazi+Text:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0}
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-thumb{background:#c4c8d0;border-radius:8px;border:3px solid transparent;background-clip:content-box}
+  ::-webkit-scrollbar-track{background:transparent}
+  input[type=range]{-webkit-appearance:none;height:5px;border-radius:4px;outline:none;cursor:pointer}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:17px;height:17px;border-radius:50%;background:#fff;border:2px solid #1F8A5B;box-shadow:0 1px 3px rgba(0,0,0,.25);cursor:pointer}
+  input.dualrange{position:absolute;left:0;top:0;width:100%;height:36px;margin:0;padding:0;background:transparent;pointer-events:none}
+  input.dualrange::-webkit-slider-runnable-track{background:transparent;border:none;height:36px}
+  input.dualrange::-webkit-slider-thumb{-webkit-appearance:none;pointer-events:auto;width:20px;height:20px;border-radius:50%;background:#fff;border:2px solid #1F8A5B;box-shadow:0 1px 3px rgba(0,0,0,.32);cursor:grab}
+  input.dualrange::-webkit-slider-thumb:active{cursor:grabbing}
+  input.dualrange::-moz-range-track{background:transparent;border:none}
+  input.dualrange::-moz-range-thumb{pointer-events:auto;width:20px;height:20px;border-radius:50%;background:#fff;border:2px solid #1F8A5B;box-shadow:0 1px 3px rgba(0,0,0,.32);cursor:grab}
+  select{-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none' stroke='%238b909b' stroke-width='1.6'%3E%3Cpath d='M3 4.5L6 7.5L9 4.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
+</style>
+</helmet>
+<div style="height:100vh;width:100vw;position:relative;overflow:hidden;display:flex;flex-direction:column;font-family:'Plus Jakarta Sans',sans-serif;background:{{ t.appBg }};color:{{ t.text }}">
+
+  <div style="height:54px;flex:none;display:flex;align-items:center;gap:14px;padding:0 16px;background:{{ t.topbar }};border-bottom:1px solid {{ t.border }};z-index:6">
+    <div style="display:flex;align-items:center;gap:9px">
+      <div style="width:30px;height:30px;border-radius:9px;background:{{ t.accent }};display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Amiri',serif;font-size:21px;font-weight:700;line-height:1;padding-bottom:2px">ق</div>
+      <div style="font-weight:800;font-size:15px;color:{{ t.text }};letter-spacing:-.01em">Quran Studio</div>
+    </div>
+    <div style="flex:1"></div>
+    <div style="display:flex;background:{{ t.panel2 }};border:1px solid {{ t.border }};border-radius:9px;padding:3px;gap:2px">
+      <button onClick="{{ onThemeLight }}" style="{{ themeLightBtn }}">Light</button>
+      <button onClick="{{ onThemeDark }}" style="{{ themeDarkBtn }}">Dark</button>
+    </div>
+    <button onClick="{{ doExport }}" style="display:flex;align-items:center;gap:7px;padding:9px 16px;border:0;border-radius:9px;background:{{ t.accent }};color:#fff;cursor:pointer;font-weight:700;font-size:13px">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5v7"/><path d="M5 6.5l3 3 3-3"/><path d="M3 12.5h10"/></svg>Export files
+    </button>
+  </div>
+
+  <div style="flex:1;display:flex;min-height:0">
+
+    <div style="width:74px;flex:none;background:{{ t.rail }};border-right:1px solid {{ t.border }};display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 0">
+      <button onClick="{{ onToolSize }}" style="{{ szBtn }}"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="5" width="16" height="12" rx="2.5"/></svg><span>Size</span></button>
+      <button onClick="{{ onToolVerses }}" style="{{ vsBtn }}"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M5 6h12"/><path d="M5 11h12"/><path d="M5 16h7"/></svg><span>Verses</span></button>
+      <button onClick="{{ onToolText }}" style="{{ txBtn }}"><span style="font-size:18px;font-weight:800;line-height:1.1;font-family:'Plus Jakarta Sans'">Aa</span><span>Style</span></button>
+    </div>
+
+    <div style="width:300px;flex:none;background:{{ t.panel }};border-right:1px solid {{ t.border }};display:flex;flex-direction:column;overflow:hidden">
+
+      <sc-if value="{{ toolIsSize }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;height:100%;overflow:hidden">
+          <div style="padding:18px 16px 10px">
+            <div style="font-weight:700;font-size:14px;color:{{ t.text }}">Canvas size</div>
+            <div style="font-weight:500;font-size:11.5px;color:{{ t.faint }};margin-top:3px">Where will you publish this?</div>
+          </div>
+          <div style="flex:1;overflow-y:auto;padding:0 10px 14px">
+            <sc-for list="{{ presetsView }}" as="p" hint-placeholder-count="9">
+              <button onClick="{{ p.onSelect }}" style="width:100%;display:flex;align-items:center;gap:13px;padding:9px 11px;margin-top:3px;border:1px solid {{ p.rowBorder }};border-radius:10px;background:{{ p.rowBg }};cursor:pointer;text-align:left">
+                <div style="width:26px;height:26px;flex:none;display:flex;align-items:center;justify-content:center"><div style="width:{{ p.mw }}px;height:{{ p.mh }}px;border:1.5px solid {{ p.rectBorder }};border-radius:3px"></div></div>
+                <div style="flex:1;font-weight:600;font-size:13px;color:{{ p.nameColor }}">{{ p.name }}</div>
+                <div style="font-weight:600;font-size:11.5px;color:{{ p.dimColor }}">{{ p.dims }}</div>
+              </button>
+            </sc-for>
+            <sc-if value="{{ isCustom }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;gap:8px;padding:12px 11px 4px">
+                <div style="flex:1"><div style="font-weight:700;font-size:9.5px;letter-spacing:.06em;color:{{ t.faint }};margin-bottom:5px">WIDTH</div><input type="number" value="{{ customW }}" onChange="{{ onCustomW }}" style="width:100%;padding:8px 9px;border:1px solid {{ t.border }};border-radius:8px;background:{{ t.input }};color:{{ t.text }};font-weight:600;font-size:12px;font-family:inherit"></div>
+                <div style="flex:1"><div style="font-weight:700;font-size:9.5px;letter-spacing:.06em;color:{{ t.faint }};margin-bottom:5px">HEIGHT</div><input type="number" value="{{ customH }}" onChange="{{ onCustomH }}" style="width:100%;padding:8px 9px;border:1px solid {{ t.border }};border-radius:8px;background:{{ t.input }};color:{{ t.text }};font-weight:600;font-size:12px;font-family:inherit"></div>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ toolIsVerses }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;height:100%;overflow-y:auto;padding:18px 16px">
+          <div style="font-weight:700;font-size:14px;color:{{ t.text }}">Select verses</div>
+          <div style="font-weight:500;font-size:11.5px;color:{{ t.faint }};margin-top:3px">Pick the surah, then the ayah range</div>
+
+          <div style="font-weight:700;font-size:10px;letter-spacing:.06em;color:{{ t.faint }};margin:18px 0 6px">SURAH</div>
+          <select value="{{ surahNum }}" onChange="{{ onSurah }}" style="width:100%;padding:10px 11px;border:1px solid {{ t.border }};border-radius:9px;background:{{ t.input }};color:{{ t.text }};font-weight:600;font-size:12.5px;font-family:inherit;cursor:pointer">
+            <sc-for list="{{ surahOptions }}" as="o" hint-placeholder-count="6"><option value="{{ o.v }}">{{ o.label }}</option></sc-for>
+          </select>
+
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin:20px 0 14px">
+            <span style="font-weight:700;font-size:10px;letter-spacing:.06em;color:{{ t.faint }}">AYAH RANGE</span>
+            <span style="font-weight:700;font-size:12px;color:{{ t.accent }}">Ayah {{ fromAyah }} – {{ toAyah }}</span>
+          </div>
+          <div style="position:relative;height:36px;margin:0 10px">
+            <div style="position:absolute;top:15px;left:0;right:0;height:6px;border-radius:4px;background:{{ t.border }}"></div>
+            <div style="position:absolute;top:15px;height:6px;border-radius:4px;background:{{ t.accent }};left:{{ fillLeft }}%;width:{{ fillWidth }}%"></div>
+            <input class="dualrange" type="range" min="{{ rangeMin }}" max="{{ rangeMax }}" step="1" value="{{ fromAyah }}" onInput="{{ onFrom }}">
+            <input class="dualrange" type="range" min="{{ rangeMin }}" max="{{ rangeMax }}" step="1" value="{{ toAyah }}" onInput="{{ onTo }}">
+          </div>
+          <div style="display:flex;justify-content:space-between;margin:3px 10px 0"><span style="font-weight:600;font-size:10px;color:{{ t.faint }}">Ayah 1</span><span style="font-weight:600;font-size:10px;color:{{ t.faint }}">Ayah {{ rangeMax }}</span></div>
+
+          <div style="margin-top:18px;padding:14px;border-radius:13px;background:{{ t.panel2 }};border:1px solid {{ t.border }}">
+            <div style="font-family:'Amiri',serif;font-size:24px;color:{{ t.text }};text-align:right;direction:rtl;line-height:1.2">{{ surahAr }}</div>
+            <div style="font-weight:600;font-size:12px;color:{{ t.sub }};margin-top:4px">{{ surahName }} · {{ rangeLabel }}</div>
+            <div style="display:flex;gap:8px;margin-top:12px">
+              <div style="flex:1;text-align:center;padding:9px 0;background:{{ t.panel }};border:1px solid {{ t.border }};border-radius:9px"><div style="font-weight:800;font-size:17px;color:{{ t.text }}">{{ totalWords }}</div><div style="font-weight:600;font-size:10px;color:{{ t.faint }};margin-top:1px">words</div></div>
+              <div style="flex:1;text-align:center;padding:9px 0;background:{{ t.panel }};border:1px solid {{ t.border }};border-radius:9px"><div style="font-weight:800;font-size:17px;color:{{ t.accent }}">{{ cardCount }}</div><div style="font-weight:600;font-size:10px;color:{{ t.faint }};margin-top:1px">cards</div></div>
+            </div>
+            <button onClick="{{ resplit }}" style="width:100%;margin-top:12px;padding:9px 0;border:1px solid {{ t.accent }};border-radius:9px;background:transparent;color:{{ t.accent }};cursor:pointer;font-weight:700;font-size:12px;font-family:inherit">Re-split into cards</button>
+          </div>
+          <div style="margin-top:12px;font-weight:500;font-size:11px;line-height:1.5;color:{{ t.faint }}">Cards are auto-split to fit your line count and canvas width. Fine-tune the breaks by moving boundary words in the card inspector.</div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ toolIsText }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;height:100%;overflow-y:auto;padding:18px 16px 24px">
+          <div style="font-weight:700;font-size:14px;color:{{ t.text }}">Caption style</div>
+          <div style="font-weight:500;font-size:11.5px;color:{{ t.faint }};margin-top:3px">Global look · applies to all inheriting cards</div>
+
+          <div style="font-weight:700;font-size:10px;letter-spacing:.06em;color:{{ t.faint }};margin:18px 0 8px">QURANIC FONT</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <sc-for list="{{ fontsGlobal }}" as="f" hint-placeholder-count="4">
+              <button onClick="{{ f.onSelect }}" style="display:flex;flex-direction:column;gap:7px;padding:11px 11px 9px;border:1.5px solid {{ f.cardBorder }};border-radius:11px;background:{{ f.cardBg }};cursor:pointer">
+                <div style="font-family:{{ f.sampleCss }};font-size:24px;color:{{ f.sampleColor }};direction:rtl;text-align:center;line-height:1.1">بِسْمِ</div>
+                <div><div style="font-weight:700;font-size:12px;color:{{ f.labelColor }}">{{ f.label }}</div><div style="font-weight:500;font-size:10px;color:{{ f.subColor }}">{{ f.sub }}</div></div>
+              </button>
+            </sc-for>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;align-items:center;margin:20px 0 8px"><span style="font-weight:700;font-size:10px;letter-spacing:.06em;color:{{ t.faint }}">FONT SIZE</span><span style="font-weight:700;font-size:11px;color:{{ t.sub }}">{{ gSizeLabel }}</span></div>
+          <input type="range" min="40" max="180" step="2" value="{{ gSize }}" onChange="{{ onSize }}" style="width:100%;background:{{ t.border }}">
+
+          <div style="font-weight:700;font-size:10px;letter-spacing:.06em;color:{{ t.faint }};margin:20px 0 9px">COLOR</div>
+          <div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap">
+            <sc-for list="{{ colorsGlobal }}" as="c" hint-placeholder-count="6"><button onClick="{{ c.onSelect }}" style="width:30px;height:30px;border-radius:50%;background:{{ c.color }};border:{{ c.ringW }} solid {{ c.ring }};cursor:pointer"></button></sc-for>
+            <label style="width:30px;height:30px;border-radius:50%;border:1.5px solid {{ t.border }};cursor:pointer;position:relative;overflow:hidden;background:conic-gradient(from 90deg,#ff4d4d,#ffd24d,#4dff88,#4dd2ff,#b14dff,#ff4d4d)"><input type="color" value="{{ gColor }}" onChange="{{ onColorInput }}" style="position:absolute;inset:-6px;opacity:0;cursor:pointer"></label>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;align-items:center;margin:20px 0 8px"><span style="font-weight:700;font-size:10px;letter-spacing:.06em;color:{{ t.faint }}">LINES PER CARD</span></div>
+          <div style="display:flex;background:{{ t.panel2 }};border:1px solid {{ t.border }};border-radius:9px;padding:3px;gap:3px">
+            <sc-for list="{{ linesGlobal }}" as="l" hint-placeholder-count="4"><button onClick="{{ l.onSelect }}" style="flex:1;padding:8px 0;border:0;border-radius:6px;cursor:pointer;font-weight:700;font-size:13px;font-family:inherit;background:{{ l.bg }};color:{{ l.fg }}">{{ l.n }}</button></sc-for>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;align-items:center;margin:20px 0 8px"><span style="font-weight:700;font-size:10px;letter-spacing:.06em;color:{{ t.faint }}">LINE HEIGHT</span><span style="font-weight:700;font-size:11px;color:{{ t.sub }}">{{ gLHLabel }}</span></div>
+          <input type="range" min="1" max="2.6" step="0.05" value="{{ gLH }}" onChange="{{ onLH }}" style="width:100%;background:{{ t.border }}">
+
+          <div style="height:1px;background:{{ t.line }};margin:22px 0 0"></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin:18px 0 0">
+            <span style="font-weight:700;font-size:10px;letter-spacing:.06em;color:{{ t.faint }}">SHADOW</span>
+            <button onClick="{{ toggleShadow }}" style="{{ shadowTog }}"><span style="{{ shadowKnob }}"></span></button>
+          </div>
+          <sc-if value="{{ shadowOn }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin:12px 0 7px"><span style="font-weight:600;font-size:10.5px;color:{{ t.sub }}">Blur</span><span style="font-weight:700;font-size:11px;color:{{ t.sub }}">{{ shadowSizeLabel }}</span></div>
+            <input type="range" min="0" max="48" step="2" value="{{ shadowSize }}" onChange="{{ onShadowSize }}" style="width:100%;background:{{ t.border }}">
+            <div style="display:flex;align-items:center;gap:8px;margin-top:11px">
+              <sc-for list="{{ shadowColors }}" as="c" hint-placeholder-count="3"><button onClick="{{ c.onSelect }}" style="width:26px;height:26px;border-radius:50%;background:{{ c.color }};border:{{ c.ringW }} solid {{ c.ring }};cursor:pointer"></button></sc-for>
+              <label style="width:26px;height:26px;border-radius:50%;border:1.5px solid {{ t.border }};cursor:pointer;position:relative;overflow:hidden;background:conic-gradient(from 90deg,#ff4d4d,#ffd24d,#4dff88,#4dd2ff,#b14dff,#ff4d4d)"><input type="color" value="{{ shadowColor }}" onChange="{{ onShadowColor }}" style="position:absolute;inset:-6px;opacity:0;cursor:pointer"></label>
+            </div>
+          </sc-if>
+
+          <div style="display:flex;justify-content:space-between;align-items:center;margin:22px 0 0">
+            <span style="font-weight:700;font-size:10px;letter-spacing:.06em;color:{{ t.faint }}">BORDER</span>
+            <button onClick="{{ toggleBorder }}" style="{{ borderTog }}"><span style="{{ borderKnob }}"></span></button>
+          </div>
+          <sc-if value="{{ borderOn }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin:12px 0 7px"><span style="font-weight:600;font-size:10.5px;color:{{ t.sub }}">Thickness</span><span style="font-weight:700;font-size:11px;color:{{ t.sub }}">{{ strokeWLabel }}</span></div>
+            <input type="range" min="1" max="12" step="1" value="{{ strokeW }}" onChange="{{ onStrokeW }}" style="width:100%;background:{{ t.border }}">
+            <div style="display:flex;align-items:center;gap:8px;margin-top:11px">
+              <sc-for list="{{ strokeColors }}" as="c" hint-placeholder-count="3"><button onClick="{{ c.onSelect }}" style="width:26px;height:26px;border-radius:50%;background:{{ c.color }};border:{{ c.ringW }} solid {{ c.ring }};cursor:pointer"></button></sc-for>
+              <label style="width:26px;height:26px;border-radius:50%;border:1.5px solid {{ t.border }};cursor:pointer;position:relative;overflow:hidden;background:conic-gradient(from 90deg,#ff4d4d,#ffd24d,#4dff88,#4dd2ff,#b14dff,#ff4d4d)"><input type="color" value="{{ strokeColor }}" onChange="{{ onStrokeColor }}" style="position:absolute;inset:-6px;opacity:0;cursor:pointer"></label>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+    </div>
+
+    <div style="flex:1;display:flex;flex-direction:column;min-width:0;background:{{ t.stage }}">
+      <div ref="{{ setStageRef }}" style="flex:1;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden">
+        <div style="position:absolute;top:14px;left:50%;transform:translateX(-50%);display:flex;gap:3px;background:{{ t.panel }};border:1px solid {{ t.border }};border-radius:11px;padding:4px;box-shadow:{{ t.shadow }};z-index:3">
+          <button onClick="{{ onBgDark }}" style="{{ bgDark }}">On video</button>
+          <button onClick="{{ onBgTransparent }}" style="{{ bgTransparent }}">Transparent</button>
+          <button onClick="{{ onBgLight }}" style="{{ bgLight }}">Light</button>
+        </div>
+        <div style="position:absolute;left:14px;bottom:14px;font-weight:600;font-size:11px;color:{{ t.sub }};background:{{ t.panel }};border:1px solid {{ t.border }};border-radius:8px;padding:5px 9px;z-index:3">{{ presetName }} · {{ presetDims }} · {{ zoomPct }}</div>
+        <div style="transform:scale({{ scale }});transform-origin:center center">
+          <div style="position:relative;width:{{ presetW }}px;height:{{ presetH }}px;overflow:hidden;border-radius:2px;box-shadow:0 12px 55px rgba(0,0,0,.32);{{ previewBgStyle }}">
+            <sc-if value="{{ hasWords }}" hint-placeholder-val="{{ true }}">
+              <div style="{{ stageCardStyle }}">
+                <sc-for list="{{ stageWords }}" as="w" hint-placeholder-count="6"><span style="white-space:nowrap;display:inline-flex;align-items:center">{{ w.text }}<sc-if value="{{ w.end }}" hint-placeholder-val="{{ false }}"><span style="display:inline-flex;align-items:center;justify-content:center;width:1.5em;height:1.5em;margin-right:.4em;border:.07em solid currentColor;border-radius:50%;font-size:.42em;font-family:'Plus Jakarta Sans',sans-serif;opacity:.82;font-weight:600">{{ w.ayahAr }}</span></sc-if></span></sc-for>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+      </div>
+
+      <div style="flex:none;height:112px;background:{{ t.panel }};border-top:1px solid {{ t.border }};display:flex;align-items:center;gap:12px;padding:0 18px;overflow-x:auto;overflow-y:hidden">
+        <sc-for list="{{ cardsView }}" as="c" hint-placeholder-count="4">
+          <button onClick="{{ c.onSelect }}" style="flex:none;display:flex;flex-direction:column;align-items:center;gap:6px;border:0;background:transparent;cursor:pointer;padding:0">
+            <div style="position:relative;width:{{ c.boxW }}px;height:{{ c.boxH }}px;border:{{ c.ringW }} solid {{ c.ring }};border-radius:5px;overflow:hidden;{{ c.bgStyle }}">
+              <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;direction:rtl;text-align:center;font-family:{{ c.fontCss }};color:{{ c.color }};font-size:8px;line-height:{{ c.lineHeight }};padding:3px;overflow:hidden">{{ c.joined }}</div>
+              <sc-if value="{{ c.overridden }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;top:3px;right:3px;width:8px;height:8px;border-radius:50%;background:{{ t.accent }};border:1.5px solid #fff"></div></sc-if>
+            </div>
+            <div style="font-weight:600;font-size:10.5px;color:{{ c.labelColor }}">{{ c.n }}</div>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="width:328px;flex:none;background:{{ t.panel }};border-left:1px solid {{ t.border }};display:flex;flex-direction:column;overflow:hidden">
+      <div style="padding:14px 16px;border-bottom:1px solid {{ t.line }};display:flex;align-items:center;gap:10px">
+        <button onClick="{{ prevCard }}" style="width:30px;height:30px;flex:none;border:1px solid {{ t.border }};border-radius:8px;background:{{ t.panel2 }};color:{{ t.text }};cursor:pointer;font-size:16px;line-height:1">‹</button>
+        <div style="flex:1;text-align:center"><div style="font-weight:700;font-size:13px;color:{{ t.text }}">Card {{ selN }} of {{ selM }}</div><div style="font-weight:500;font-size:11px;color:{{ t.faint }};margin-top:1px">{{ cardAyahLabel }} · {{ selCount }} words</div></div>
+        <button onClick="{{ nextCard }}" style="width:30px;height:30px;flex:none;border:1px solid {{ t.border }};border-radius:8px;background:{{ t.panel2 }};color:{{ t.text }};cursor:pointer;font-size:16px;line-height:1">›</button>
+      </div>
+
+      <div style="flex:1;overflow-y:auto;padding:16px">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+          <div><div style="font-weight:700;font-size:12.5px;color:{{ t.text }}">Custom style</div><div style="font-weight:500;font-size:10.5px;color:{{ t.faint }};margin-top:1px">Override the global look</div></div>
+          <button onClick="{{ toggleOverride }}" style="{{ ovBtn }}"><span style="{{ ovKnob }}"></span></button>
+        </div>
+
+        <sc-if value="{{ inheriting }}" hint-placeholder-val="{{ true }}">
+          <div style="margin-top:12px;padding:11px 12px;border-radius:10px;background:{{ t.panel2 }};border:1px dashed {{ t.border }};font-weight:500;font-size:11px;line-height:1.5;color:{{ t.sub }}">This card follows the global style. Turn on <b style="color:{{ t.text }}">Custom style</b> to give it its own font, size or color.</div>
+        </sc-if>
+
+        <sc-if value="{{ selOverridden }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:14px">
+            <div style="font-weight:700;font-size:10px;letter-spacing:.06em;color:{{ t.faint }};margin-bottom:8px">FONT</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px">
+              <sc-for list="{{ fontsCard }}" as="f" hint-placeholder-count="4"><button onClick="{{ f.onSelect }}" style="display:flex;align-items:center;justify-content:space-between;gap:6px;padding:9px 10px;border:1.5px solid {{ f.cardBorder }};border-radius:9px;background:{{ f.cardBg }};cursor:pointer"><span style="font-weight:700;font-size:11.5px;color:{{ f.labelColor }}">{{ f.label }}</span><span style="font-family:{{ f.sampleCss }};font-size:17px;color:{{ f.sampleColor }};direction:rtl">ب</span></button></sc-for>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin:16px 0 7px"><span style="font-weight:700;font-size:10px;letter-spacing:.06em;color:{{ t.faint }}">SIZE</span><span style="font-weight:700;font-size:11px;color:{{ t.sub }}">{{ effSizeLabel }}</span></div>
+            <input type="range" min="40" max="180" step="2" value="{{ effSize }}" onChange="{{ onCardSize }}" style="width:100%;background:{{ t.border }}">
+            <div style="font-weight:700;font-size:10px;letter-spacing:.06em;color:{{ t.faint }};margin:16px 0 8px">COLOR</div>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <sc-for list="{{ colorsCard }}" as="c" hint-placeholder-count="6"><button onClick="{{ c.onSelect }}" style="width:27px;height:27px;border-radius:50%;background:{{ c.color }};border:{{ c.ringW }} solid {{ c.ring }};cursor:pointer"></button></sc-for>
+              <label style="width:27px;height:27px;border-radius:50%;border:1.5px solid {{ t.border }};cursor:pointer;position:relative;overflow:hidden;background:conic-gradient(from 90deg,#ff4d4d,#ffd24d,#4dff88,#4dd2ff,#b14dff,#ff4d4d)"><input type="color" value="{{ effColor }}" onChange="{{ onCardColorInput }}" style="position:absolute;inset:-6px;opacity:0;cursor:pointer"></label>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin:16px 0 7px"><span style="font-weight:700;font-size:10px;letter-spacing:.06em;color:{{ t.faint }}">LINE HEIGHT</span><span style="font-weight:700;font-size:11px;color:{{ t.sub }}">{{ effLHLabel }}</span></div>
+            <input type="range" min="1" max="2.6" step="0.05" value="{{ effLH }}" onChange="{{ onCardLH }}" style="width:100%;background:{{ t.border }}">
+            <button onClick="{{ resetCard }}" style="margin-top:14px;width:100%;padding:8px 0;border:1px solid {{ t.border }};border-radius:9px;background:transparent;color:{{ t.sub }};cursor:pointer;font-weight:600;font-size:11.5px;font-family:inherit">Reset to global style</button>
+          </div>
+        </sc-if>
+
+        <div style="height:1px;background:{{ t.line }};margin:18px 0"></div>
+
+        <div style="font-weight:700;font-size:12.5px;color:{{ t.text }}">Adjust words</div>
+        <div style="font-weight:500;font-size:10.5px;color:{{ t.faint }};margin-top:2px">Move a boundary word to the neighbouring card</div>
+
+        <div style="margin-top:12px;padding:11px 12px;border-radius:11px;background:{{ t.panel2 }};border:1px solid {{ t.border }}">
+          <div style="font-weight:600;font-size:10px;color:{{ t.faint }};text-transform:uppercase;letter-spacing:.05em">First word of card</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:7px">
+            <div style="font-family:'Amiri',serif;font-size:22px;color:{{ t.text }};direction:rtl">{{ selFirst }}</div>
+            <button onClick="{{ moveFirst }}" style="{{ mfBtn }}"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3l-4 4 4 4"/></svg>Prev card</button>
+          </div>
+        </div>
+        <div style="margin-top:9px;padding:11px 12px;border-radius:11px;background:{{ t.panel2 }};border:1px solid {{ t.border }}">
+          <div style="font-weight:600;font-size:10px;color:{{ t.faint }};text-transform:uppercase;letter-spacing:.05em">Last word of card</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:7px">
+            <div style="font-family:'Amiri',serif;font-size:22px;color:{{ t.text }};direction:rtl">{{ selLast }}</div>
+            <button onClick="{{ moveLast }}" style="{{ mlBtn }}">Next card<svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3l4 4-4 4"/></svg></button>
+          </div>
+        </div>
+
+        <sc-if value="{{ canDelete }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ deleteCard }}" style="margin-top:16px;width:100%;padding:9px 0;border:1px solid {{ t.dangerBorder }};border-radius:9px;background:transparent;color:{{ t.danger }};cursor:pointer;font-weight:600;font-size:12px;font-family:inherit">Delete this card</button>
+        </sc-if>
+      </div>
+    </div>
+  </div>
+
+  <sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;bottom:130px;left:50%;transform:translateX(-50%);background:{{ t.text }};color:{{ t.panel }};padding:12px 20px;border-radius:11px;font-weight:600;font-size:13px;box-shadow:0 10px 34px rgba(0,0,0,.28);z-index:40;display:flex;align-items:center;gap:9px"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="{{ t.accent }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3 3 7-7"/></svg>{{ toast }}</div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    theme:'light', tool:'size', presetKey:'short', customW:1080, customH:1350,
+    surahNum:1, fromAyah:1, toAyah:7,
+    global:{ font:'Uthmanic', size:104, color:'#FFFFFF', linesPerCard:2, lineHeight:1.7, shadow:true, shadowSize:22, shadowColor:'#000000', stroke:false, strokeW:4, strokeColor:'#000000' },
+    cards:[], sel:0, previewBg:'dark', scale:0.3, toast:null
+  };
+
+  THEMES = {
+    light:{ appBg:'#e9ebef', topbar:'#ffffff', rail:'#ffffff', panel:'#ffffff', panel2:'#f4f5f8', text:'#181a1f', sub:'#5f6571', faint:'#9aa0ab', border:'#e6e8ed', line:'#eef0f3', hover:'#f2f3f6', accent:'#1F8A5B', accentSoft:'#e7f6ee', stage:'#e3e6ec', input:'#ffffff', shadow:'0 1px 4px rgba(20,24,40,.10)', danger:'#c2453d', dangerBorder:'#eccac7' },
+    dark:{ appBg:'#0e0f12', topbar:'#16171c', rail:'#16171c', panel:'#17181e', panel2:'#1d1f26', text:'#eaebef', sub:'#9a9fab', faint:'#6a6e79', border:'#292b33', line:'#22242b', hover:'#22242b', accent:'#2BA56E', accentSoft:'#14302322', stage:'#0b0c0f', input:'#1d1f26', shadow:'0 2px 8px rgba(0,0,0,.45)', danger:'#e2685f', dangerBorder:'#3a2a2a' }
+  };
+
+  PRESETS = [
+    {key:'yt',name:'YouTube',w:1920,h:1080},
+    {key:'short',name:'YouTube Short',w:1080,h:1920},
+    {key:'reel',name:'Instagram Reel',w:1080,h:1920},
+    {key:'igpost',name:'Instagram Post',w:1080,h:1080},
+    {key:'igport',name:'Instagram Portrait',w:1080,h:1350},
+    {key:'fbreel',name:'Facebook Reel',w:1080,h:1920},
+    {key:'tiktok',name:'TikTok',w:1080,h:1920},
+    {key:'x',name:'X / Twitter',w:1280,h:720},
+    {key:'custom',name:'Custom',w:1080,h:1080}
+  ];
+
+  FONTS = [
+    {key:'QCF1',label:'QCF1',sub:'Madani v1',css:"'Markazi Text', serif"},
+    {key:'QCF2',label:'QCF2',sub:'Madani v2',css:"'Noto Naskh Arabic', serif"},
+    {key:'IndoPak',label:'IndoPak',sub:'Naskh',css:"'Scheherazade New', serif"},
+    {key:'Uthmanic',label:'Uthmanic',sub:'Hafs',css:"'Amiri', serif"}
+  ];
+
+  COLORS = ['#FFFFFF','#111114','#F4D58D','#D4A437','#1F8A5B','#1E66D0'];
+
+  SURAHS = [
+    {num:1,name:'Al-Fatihah',ar:'الفاتحة',ayat:[
+      'بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ',
+      'ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ',
+      'ٱلرَّحْمَٰنِ ٱلرَّحِيمِ',
+      'مَٰلِكِ يَوْمِ ٱلدِّينِ',
+      'إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ',
+      'ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ',
+      'صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ']},
+    {num:103,name:'Al-Asr',ar:'العصر',ayat:[
+      'وَٱلْعَصْرِ',
+      'إِنَّ ٱلْإِنسَٰنَ لَفِى خُسْرٍ',
+      'إِلَّا ٱلَّذِينَ ءَامَنُوا۟ وَعَمِلُوا۟ ٱلصَّٰلِحَٰتِ وَتَوَاصَوْا۟ بِٱلْحَقِّ وَتَوَاصَوْا۟ بِٱلصَّبْرِ']},
+    {num:108,name:'Al-Kawthar',ar:'الكوثر',ayat:[
+      'إِنَّآ أَعْطَيْنَٰكَ ٱلْكَوْثَرَ',
+      'فَصَلِّ لِرَبِّكَ وَٱنْحَرْ',
+      'إِنَّ شَانِئَكَ هُوَ ٱلْأَبْتَرُ']},
+    {num:112,name:'Al-Ikhlas',ar:'الإخلاص',ayat:[
+      'قُلْ هُوَ ٱللَّهُ أَحَدٌ',
+      'ٱللَّهُ ٱلصَّمَدُ',
+      'لَمْ يَلِدْ وَلَمْ يُولَدْ',
+      'وَلَمْ يَكُن لَّهُۥ كُفُوًا أَحَدٌۢ']},
+    {num:113,name:'Al-Falaq',ar:'الفلق',ayat:[
+      'قُلْ أَعُوذُ بِرَبِّ ٱلْفَلَقِ',
+      'مِن شَرِّ مَا خَلَقَ',
+      'وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ',
+      'وَمِن شَرِّ ٱلنَّفَّٰثَٰتِ فِى ٱلْعُقَدِ',
+      'وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ']},
+    {num:114,name:'An-Nas',ar:'الناس',ayat:[
+      'قُلْ أَعُوذُ بِرَبِّ ٱلنَّاسِ',
+      'مَلِكِ ٱلنَّاسِ',
+      'إِلَٰهِ ٱلنَّاسِ',
+      'مِن شَرِّ ٱلْوَسْوَاسِ ٱلْخَنَّاسِ',
+      'ٱلَّذِى يُوَسْوِسُ فِى صُدُورِ ٱلنَّاسِ',
+      'مِنَ ٱلْجِنَّةِ وَٱلنَّاسِ']}
+  ];
+
+  ar(n){ return String(n).replace(/[0-9]/g, d=>'٠١٢٣٤٥٦٧٨٩'[+d]); }
+  t(){ return this.THEMES[this.state.theme]; }
+  preset(){ const s=this.state; if(s.presetKey==='custom') return {key:'custom',name:'Custom',w:s.customW,h:s.customH}; return this.PRESETS.find(p=>p.key===s.presetKey)||this.PRESETS[1]; }
+  fontCss(k){ return (this.FONTS.find(f=>f.key===k)||this.FONTS[3]).css; }
+  surah(){ return this.SURAHS.find(s=>s.num===this.state.surahNum)||this.SURAHS[0]; }
+
+  buildWords(){ const s=this.surah(); const out=[]; for(let a=this.state.fromAyah;a<=this.state.toAyah;a++){ const txt=s.ayat[a-1]; if(!txt) continue; const ws=txt.split(/\s+/).filter(Boolean); ws.forEach((w,i)=>out.push({text:w,surah:s.num,ayah:a,end:i===ws.length-1})); } return out; }
+  capacity(){ const p=this.preset(); const cw=p.w*0.82; const wpl=Math.max(1,Math.floor(cw/(this.state.global.size*2.35))); return Math.max(2,wpl*this.state.global.linesPerCard); }
+  resplit(cb){ const words=this.buildWords(); const cap=this.capacity(); const cards=[]; for(let i=0;i<words.length;i+=cap) cards.push({words:words.slice(i,i+cap),override:null}); if(!cards.length) cards.push({words:[],override:null}); this.setState({cards,sel:0},cb); }
+
+  componentDidMount(){ this.resplit(()=>this.measure()); }
+  componentWillUnmount(){ if(this._ro) this._ro.disconnect(); }
+  setStageRef = (el)=>{ this.stageEl=el; if(el){ if(this._ro) this._ro.disconnect(); this._ro=new ResizeObserver(()=>this.measure()); this._ro.observe(el); this.measure(); } };
+  measure(){ const el=this.stageEl; if(!el) return; const p=this.preset(); const aw=el.clientWidth-64, ah=el.clientHeight-64; const sc=Math.max(0.04,Math.min(aw/p.w,ah/p.h)); if(Math.abs(sc-this.state.scale)>0.0005) this.setState({scale:sc}); }
+
+  setTheme(v){ this.setState({theme:v}); }
+  setTool(v){ this.setState({tool:v}); }
+  setPreset(k){ this.setState({presetKey:k},()=>this.measure()); }
+  setCustom(dim,v){ v=Math.max(200,Math.min(4096,parseInt(v)||0)); this.setState(dim==='w'?{customW:v}:{customH:v},()=>this.measure()); }
+  setSurah(n){ const s=this.SURAHS.find(x=>x.num===n); this.setState({surahNum:n,fromAyah:1,toAyah:s.ayat.length},()=>this.resplit()); }
+  setFrom(v){ this.setState(s=>({fromAyah:Math.min(v,s.toAyah)}),()=>this.resplit()); }
+  setTo(v){ this.setState(s=>({toAyah:Math.max(v,s.fromAyah)}),()=>this.resplit()); }
+  setFont(k){ this.setState(s=>({global:{...s.global,font:k}})); }
+  setSize(v){ this.setState(s=>({global:{...s.global,size:+v}})); }
+  setColor(c){ this.setState(s=>({global:{...s.global,color:c}})); }
+  setLines(n){ this.setState(s=>({global:{...s.global,linesPerCard:n}}),()=>this.resplit()); }
+  setLineHeight(v){ this.setState(s=>({global:{...s.global,lineHeight:+v}})); }
+  setGlobal(f,v){ this.setState(s=>({global:{...s.global,[f]:v}})); }
+  selectCard(i){ this.setState({sel:i}); }
+  prevCard(){ this.setState(s=>({sel:Math.max(0,s.sel-1)})); }
+  nextCard(){ this.setState(s=>({sel:Math.min(s.cards.length-1,s.sel+1)})); }
+  toggleOverride(){ this.setState(s=>({cards:s.cards.map((c,i)=>i===s.sel?{words:c.words,override:c.override?null:{...s.global}}:c)})); }
+  setCardField(f,v){ this.setState(s=>({cards:s.cards.map((c,i)=>i===s.sel?{words:c.words,override:{...(c.override||s.global),[f]:v}}:c)})); }
+  resetCard(){ this.setState(s=>({cards:s.cards.map((c,i)=>i===s.sel?{words:c.words,override:null}:c)})); }
+  deleteCard(){ this.setState(s=>{ if(s.cards.length<=1) return {}; const cards=s.cards.slice(); cards.splice(s.sel,1); return {cards,sel:Math.max(0,s.sel-1)}; }); }
+  moveLast(){ this.setState(s=>{ const i=s.sel; const cards=s.cards.map(c=>({words:c.words.slice(),override:c.override})); if(!cards[i]||cards[i].words.length<=1) return {}; const w=cards[i].words.pop(); if(!cards[i+1]) cards.splice(i+1,0,{words:[],override:null}); cards[i+1].words.unshift(w); return {cards}; }); }
+  moveFirst(){ this.setState(s=>{ const i=s.sel; if(i===0) return {}; const cards=s.cards.map(c=>({words:c.words.slice(),override:c.override})); if(cards[i].words.length<=1) return {}; const w=cards[i].words.shift(); cards[i-1].words.push(w); return {cards}; }); }
+  setPreviewBg(m){ this.setState({previewBg:m}); }
+  doExport(){ const n=this.state.cards.length; this.setState({toast:'Exported '+n+' transparent PNG'+(n>1?'s':'')+' — one file per card'}); clearTimeout(this._tt); this._tt=setTimeout(()=>this.setState({toast:null}),2800); }
+  bgStyle(m){ if(m==='dark') return 'background:#0c0c0f'; if(m==='light') return 'background:#ffffff'; return 'background-color:#e9ebef;background-image:repeating-conic-gradient(#cfd2d8 0% 25%,#eef0f2 0% 50%);background-size:64px 64px'; }
+
+  renderVals(){
+    const t=this.t(), st=this.state, g=st.global, p=this.preset(), ar=this.ar.bind(this);
+    const cards=st.cards.length?st.cards:[{words:[],override:null}];
+    const sel=Math.min(st.sel,cards.length-1);
+    const selCard=cards[sel];
+    const eff=selCard.override||g;
+
+    const seg=(m)=>{ const a=st.theme===m; return `padding:5px 13px;border:0;border-radius:7px;cursor:pointer;font-weight:600;font-size:12px;font-family:'Plus Jakarta Sans';background:${a?t.panel:'transparent'};color:${a?t.text:t.sub};box-shadow:${a?t.shadow:'none'}`; };
+    const rb=(a)=>`display:flex;flex-direction:column;align-items:center;gap:6px;width:58px;padding:10px 4px;border:0;border-radius:13px;cursor:pointer;font-family:'Plus Jakarta Sans';font-weight:600;font-size:10px;letter-spacing:.02em;background:${a?t.accentSoft:'transparent'};color:${a?t.accent:t.sub}`;
+    const bgBtn=(m)=>{ const a=st.previewBg===m; return `padding:5px 11px;border-radius:8px;border:0;cursor:pointer;font-weight:600;font-size:11px;font-family:'Plus Jakarta Sans';background:${a?t.accent:'transparent'};color:${a?'#fff':t.sub}`; };
+    const moveBtn=(en)=>`display:flex;align-items:center;gap:6px;padding:8px 12px;border:1px solid ${t.border};border-radius:9px;background:${t.panel};color:${en?t.accent:t.faint};cursor:${en?'pointer':'not-allowed'};font-weight:700;font-size:11.5px;font-family:'Plus Jakarta Sans';opacity:${en?1:.5}`;
+
+    const presetsView=this.PRESETS.map(pr=>{ const active=pr.key===st.presetKey; const w=pr.key==='custom'?st.customW:pr.w, h=pr.key==='custom'?st.customH:pr.h; let mw,mh; if(w>=h){ mw=22; mh=Math.max(6,Math.round(22*h/w)); } else { mh=22; mw=Math.max(6,Math.round(22*w/h)); } return { name:pr.name, dims:w+'×'+h, mw, mh, onSelect:()=>this.setPreset(pr.key), rowBg:active?t.accentSoft:'transparent', rowBorder:active?t.accent:'transparent', nameColor:active?t.accent:t.text, dimColor:active?t.accent:t.faint, rectBorder:active?t.accent:t.sub }; });
+
+    const surahOptions=this.SURAHS.map(s=>({v:s.num,label:s.num+'. '+s.name}));
+    const ayahCount=this.surah().ayat.length;
+    const denom=Math.max(1,ayahCount-1);
+    const fillLeft=((st.fromAyah-1)/denom)*100;
+    const fillWidth=((st.toAyah-st.fromAyah)/denom)*100;
+
+    const mkFonts=(cur,pick)=>this.FONTS.map(f=>{ const a=cur===f.key; return { label:f.label, sub:f.sub, sampleCss:f.css, onSelect:()=>pick(f.key), cardBg:a?t.accentSoft:t.panel2, cardBorder:a?t.accent:t.border, labelColor:a?t.accent:t.text, subColor:t.faint, sampleColor:t.text }; });
+    const mkColors=(cur,pick)=>this.COLORS.map(c=>{ const a=(cur||'').toLowerCase()===c.toLowerCase(); return { color:c, onSelect:()=>pick(c), ring:a?t.accent:t.border, ringW:a?'2.5px':'1.5px' }; });
+    const mkLines=(cur,pick)=>[1,2,3,4].map(n=>{ const a=cur===n; return { n, onSelect:()=>pick(n), bg:a?t.accent:'transparent', fg:a?'#fff':t.sub }; });
+
+    const cardsView=cards.map((c,i)=>{ const e=c.override||g; const bh=58, bw=Math.max(28,Math.round(58*p.w/p.h)); const active=i===sel; return { n:i+1, active, overridden:!!c.override, joined:c.words.map(x=>x.text).join(' '), onSelect:()=>this.selectCard(i), boxW:bw, boxH:bh, bgStyle:this.bgStyle(st.previewBg), fontCss:this.fontCss(e.font), color:e.color, lineHeight:e.lineHeight, ring:active?t.accent:t.border, ringW:active?'2.5px':'1px', labelColor:active?t.accent:t.sub }; });
+
+    const stageWords=selCard.words.map(w=>({ text:w.text, end:w.end, ayahAr:ar(w.ayah) }));
+    const rowGap=eff.size*(eff.lineHeight-1)+eff.size*0.05, colGap=eff.size*0.34;
+    let fx='';
+    if(eff.shadow){ fx+=`text-shadow:0 ${Math.round(eff.size*0.025)}px ${eff.shadowSize}px ${eff.shadowColor};`; }
+    if(eff.stroke && eff.strokeW>0){ fx+=`-webkit-text-stroke:${eff.strokeW}px ${eff.strokeColor};paint-order:stroke;`; }
+    const stageCardStyle=`direction:rtl;display:flex;flex-wrap:wrap;justify-content:center;align-content:center;gap:${rowGap}px ${colGap}px;font-family:${this.fontCss(eff.font)};font-size:${eff.size}px;color:${eff.color};line-height:${eff.lineHeight};padding:6% 8%;width:100%;height:100%;box-sizing:border-box;text-align:center;${fx}`;
+    const tog=(on)=>`width:40px;height:23px;flex:none;border-radius:12px;border:0;cursor:pointer;position:relative;background:${on?t.accent:t.border};transition:background .15s`;
+    const togK=(on)=>`position:absolute;top:3px;${on?'left:20px':'left:3px'};width:17px;height:17px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.3);transition:left .15s`;
+    const mkSw=(list,cur,pick)=>list.map(c=>{ const a=(cur||'').toLowerCase()===c.toLowerCase(); return { color:c, onSelect:()=>pick(c), ring:a?t.accent:t.border, ringW:a?'2.5px':'1.5px' }; });
+
+    const ayahs=[...new Set(selCard.words.map(w=>w.ayah))];
+    const cardAyahLabel=ayahs.length?('Ayah '+(ayahs.length>1?ayahs[0]+'–'+ayahs[ayahs.length-1]:ayahs[0])):'—';
+    const canMove=selCard.words.length>1, canPrev=sel>0;
+
+    return {
+      t, theme:st.theme, tool:st.tool, toast:st.toast,
+      presetName:p.name, presetDims:p.w+'×'+p.h, presetW:p.w, presetH:p.h, scale:st.scale, zoomPct:Math.round(st.scale*100)+'%',
+      isCustom:st.presetKey==='custom', customW:st.customW, customH:st.customH,
+      previewBgStyle:this.bgStyle(st.previewBg),
+      hasWords:stageWords.length>0, stageWords, stageCardStyle,
+      presetsView, surahOptions,
+      rangeMin:1, rangeMax:ayahCount, fillLeft, fillWidth,
+      surahNum:st.surahNum, fromAyah:st.fromAyah, toAyah:st.toAyah,
+      surahName:this.surah().name, surahAr:this.surah().ar, rangeLabel:'Ayah '+st.fromAyah+'–'+st.toAyah,
+      totalWords:this.buildWords().length, cardCount:cards.length,
+      fontsGlobal:mkFonts(g.font,k=>this.setFont(k)), colorsGlobal:mkColors(g.color,c=>this.setColor(c)), linesGlobal:mkLines(g.linesPerCard,n=>this.setLines(n)),
+      fontsCard:mkFonts(eff.font,k=>this.setCardField('font',k)), colorsCard:mkColors(eff.color,c=>this.setCardField('color',c)),
+      gSize:g.size, gLH:g.lineHeight, gColor:g.color, gSizeLabel:g.size+'px', gLHLabel:g.lineHeight.toFixed(2),
+      shadowOn:g.shadow, shadowTog:tog(g.shadow), shadowKnob:togK(g.shadow), shadowSize:g.shadowSize, shadowSizeLabel:g.shadowSize+'px', shadowColor:g.shadowColor,
+      borderOn:g.stroke, borderTog:tog(g.stroke), borderKnob:togK(g.stroke), toggleBorder:()=>this.setGlobal('stroke',!g.stroke),
+      strokeW:g.strokeW, strokeColor:g.strokeColor, strokeWLabel:g.strokeW+'px',
+      shadowColors:mkSw(['#000000','#3a3a3a','#FFFFFF'],g.shadowColor,c=>this.setGlobal('shadowColor',c)),
+      strokeColors:mkSw(['#000000','#FFFFFF','#D4A437'],g.strokeColor,c=>this.setGlobal('strokeColor',c)),
+      toggleShadow:()=>this.setGlobal('shadow',!g.shadow),
+      onShadowSize:e=>this.setGlobal('shadowSize',+e.target.value), onShadowColor:e=>this.setGlobal('shadowColor',e.target.value),
+      onStrokeW:e=>this.setGlobal('strokeW',+e.target.value), onStrokeColor:e=>this.setGlobal('strokeColor',e.target.value),
+      cardsView,
+      selN:sel+1, selM:cards.length, selCount:selCard.words.length, selOverridden:!!selCard.override, inheriting:!selCard.override, cardAyahLabel,
+      effSize:eff.size, effLH:eff.lineHeight, effColor:eff.color, effSizeLabel:eff.size+'px', effLHLabel:eff.lineHeight.toFixed(2),
+      selFirst:selCard.words[0]?selCard.words[0].text:'—', selLast:selCard.words.length?selCard.words[selCard.words.length-1].text:'—',
+      canDelete:cards.length>1,
+      szBtn:rb(st.tool==='size'), vsBtn:rb(st.tool==='verses'), txBtn:rb(st.tool==='text'),
+      toolIsSize:st.tool==='size', toolIsVerses:st.tool==='verses', toolIsText:st.tool==='text',
+      themeLightBtn:seg('light'), themeDarkBtn:seg('dark'),
+      bgDark:bgBtn('dark'), bgTransparent:bgBtn('transparent'), bgLight:bgBtn('light'),
+      ovBtn:`width:44px;height:25px;flex:none;border-radius:13px;border:0;cursor:pointer;position:relative;background:${selCard.override?t.accent:t.border};transition:background .15s`,
+      ovKnob:`position:absolute;top:3px;${selCard.override?'left:22px':'left:3px'};width:19px;height:19px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.3);transition:left .15s`,
+      mfBtn:moveBtn(canPrev&&canMove), mlBtn:moveBtn(canMove),
+      setStageRef:this.setStageRef,
+      onThemeLight:()=>this.setTheme('light'), onThemeDark:()=>this.setTheme('dark'),
+      onToolSize:()=>this.setTool('size'), onToolVerses:()=>this.setTool('verses'), onToolText:()=>this.setTool('text'),
+      onSurah:e=>this.setSurah(+e.target.value), onFrom:e=>this.setFrom(+e.target.value), onTo:e=>this.setTo(+e.target.value),
+      onSize:e=>this.setSize(e.target.value), onLH:e=>this.setLineHeight(e.target.value), onColorInput:e=>this.setColor(e.target.value),
+      onCardSize:e=>this.setCardField('size',+e.target.value), onCardLH:e=>this.setCardField('lineHeight',+e.target.value), onCardColorInput:e=>this.setCardField('color',e.target.value),
+      onCustomW:e=>this.setCustom('w',e.target.value), onCustomH:e=>this.setCustom('h',e.target.value),
+      onBgDark:()=>this.setPreviewBg('dark'), onBgTransparent:()=>this.setPreviewBg('transparent'), onBgLight:()=>this.setPreviewBg('light'),
+      resplit:()=>this.resplit(), doExport:()=>this.doExport(),
+      toggleOverride:()=>this.toggleOverride(), resetCard:()=>this.resetCard(), deleteCard:()=>this.deleteCard(),
+      prevCard:()=>this.prevCard(), nextCard:()=>this.nextCard(), moveFirst:()=>this.moveFirst(), moveLast:()=>this.moveLast()
+    };
+  }
+}
+</script>
+</body>
+</html>

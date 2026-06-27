@@ -1,0 +1,114 @@
+/* KFGQPC/QUL calligraphic surah-name font (V4). Ligature-based: rendering the
+   text "surah001".."surah114" substitutes the ornamental surah name. */
+@font-face {
+  font-family: 'surah-name-v4';
+  src: url('/fonts/surah-name/surah-name-v4.woff2') format('woff2');
+  font-display: swap;
+}
+
+/* Global base styles ported from the Quran Studio design canvas */
+* {
+  box-sizing: border-box;
+}
+html,
+body,
+#root {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: #c4c8d0;
+  border-radius: 8px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Single-thumb range inputs */
+input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 5px;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+}
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #1f8a5b;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+
+/* Dual-thumb range (ayah range slider).
+   The input is exactly the thumb's height (20px) and vertically centered in the
+   36px track row (top: 8px), so the thumb has only one possible vertical
+   position — dead-centered on the bar — regardless of WebKit's thumb placement. */
+input.dualrange {
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 100%;
+  height: 20px;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  pointer-events: none;
+}
+input.dualrange::-webkit-slider-runnable-track {
+  background: transparent;
+  border: none;
+  height: 20px;
+}
+input.dualrange::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  pointer-events: auto;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #1f8a5b;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.32);
+  cursor: grab;
+}
+input.dualrange::-webkit-slider-thumb:active {
+  cursor: grabbing;
+}
+input.dualrange::-moz-range-track {
+  background: transparent;
+  border: none;
+}
+input.dualrange::-moz-range-thumb {
+  pointer-events: auto;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #1f8a5b;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.32);
+  cursor: grab;
+}
+
+/* Custom select chevron */
+select {
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none' stroke='%238b909b' stroke-width='1.6'%3E%3Cpath d='M3 4.5L6 7.5L9 4.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
