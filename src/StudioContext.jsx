@@ -78,11 +78,18 @@ const INITIAL = {
   surahFontReady: false,
 }
 
+// Below this viewport width the studio switches from the 3-column desktop layout
+// to a single-column mobile shell (full-bleed stage + bottom nav + sheets).
+const MOBILE_QUERY = '(max-width: 1023px)'
+
 export function StudioProvider({ children }) {
   // Restore persisted user settings over the defaults (cards/fonts rebuild on mount).
   const [state, setState] = useState(() => loadSettings(INITIAL))
   const [scale, setScale] = useState(0.3)
   const [stageEl, setStageEl] = useState(null)
+  const [mobile, setMobile] = useState(
+    () => typeof window !== 'undefined' && !!window.matchMedia && window.matchMedia(MOBILE_QUERY).matches,
+  )
 
   const streamRef = useRef([]) // measured flat token stream for the current load
   const stateRef = useRef(state)
@@ -214,6 +221,16 @@ export function StudioProvider({ children }) {
     ro.observe(stageEl)
     return () => ro.disconnect()
   }, [stageEl, state.presetKey, state.customW, state.customH])
+
+  // ── Track the mobile/desktop breakpoint ──────────────────────────────────
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) return
+    const mq = window.matchMedia(MOBILE_QUERY)
+    const onChange = () => setMobile(mq.matches)
+    onChange()
+    mq.addEventListener('change', onChange)
+    return () => mq.removeEventListener('change', onChange)
+  }, [])
 
   useEffect(() => () => clearTimeout(toastTimer.current), [])
 
@@ -445,6 +462,7 @@ export function StudioProvider({ children }) {
   const value = {
     state,
     scale,
+    mobile,
     t: THEMES[state.theme],
     locale: state.locale,
     rtl: state.locale === 'ar',

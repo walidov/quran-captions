@@ -45,7 +45,7 @@ export default function Stage() {
 
   return (
     <div
-      style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0, background: t.stage }}
+      style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0, minHeight: 0, background: t.stage }}
     >
       <div
         ref={setStageEl}

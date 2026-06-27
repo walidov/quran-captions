@@ -3,13 +3,14 @@ import { PRESETS, FONTS } from '../data'
 
 // A header dropdown "pill": the current label + a down-chevron, with a
 // transparent full-size <select> overlaying it so the whole pill is clickable.
-function Field({ t, rtl, value, onChange, options, displayLabel, ariaLabel }) {
+function Field({ t, rtl, value, onChange, options, displayLabel, ariaLabel, fullWidth }) {
   return (
     <div
       style={{
         position: 'relative',
         display: 'flex',
         alignItems: 'center',
+        width: fullWidth ? '100%' : undefined,
         height: 34,
         padding: rtl ? '0 12px 0 30px' : '0 30px 0 12px',
         background: t.panel2,
@@ -106,7 +107,7 @@ function FontIcon({ color }) {
 }
 
 export default function HeaderControls() {
-  const { state, t, actions, tr, rtl } = useStudio()
+  const { state, t, actions, tr, rtl, mobile } = useStudio()
 
   const dims = (p) => (p.key === 'custom' ? `${state.customW}×${state.customH}` : `${p.w}×${p.h}`)
   const presetName = (p) => tr(`preset.${p.key}`)
@@ -131,6 +132,65 @@ export default function HeaderControls() {
     fontFamily: 'inherit',
   }
   const group = { display: 'flex', alignItems: 'center', gap: 8 }
+
+  if (mobile) {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+        {/* Canvas size */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 11 }}>
+          <ScreenIcon color={t.sub} />
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <Field
+              t={t}
+              rtl={rtl}
+              fullWidth
+              ariaLabel="Canvas size"
+              value={state.presetKey}
+              onChange={(e) => actions.setPreset(e.target.value)}
+              options={sizeOptions}
+              displayLabel={sizeLabel}
+            />
+          </div>
+        </div>
+        {state.presetKey === 'custom' && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, paddingInlineStart: 30 }}>
+            <input
+              type="number"
+              value={state.customW}
+              onChange={(e) => actions.setCustom('w', e.target.value)}
+              style={{ ...numInput, flex: 1, width: 'auto' }}
+              aria-label="Custom width"
+            />
+            <span style={{ color: t.faint, fontWeight: 600, fontSize: 12 }}>×</span>
+            <input
+              type="number"
+              value={state.customH}
+              onChange={(e) => actions.setCustom('h', e.target.value)}
+              style={{ ...numInput, flex: 1, width: 'auto' }}
+              aria-label="Custom height"
+            />
+          </div>
+        )}
+
+        {/* Quranic font */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 11 }}>
+          <FontIcon color={t.sub} />
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <Field
+              t={t}
+              rtl={rtl}
+              fullWidth
+              ariaLabel="Quranic font"
+              value={state.global.font}
+              onChange={(e) => actions.setFont(e.target.value)}
+              options={fontOptions}
+              displayLabel={fontLabel}
+            />
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>

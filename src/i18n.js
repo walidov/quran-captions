@@ -15,6 +15,11 @@ const MESSAGES = {
     'tool.style': 'Style',
     'share': 'Share',
 
+    'nav.card': 'Card',
+    'nav.export': 'Export',
+    'nav.canvas': 'Canvas',
+    'nav.canvasSub': 'Canvas size and Qur’an font',
+
     'theme.toDark': 'Switch to dark mode',
     'theme.toLight': 'Switch to light mode',
     'lang.switch': 'العربية',
@@ -103,6 +108,11 @@ const MESSAGES = {
     'tool.verses': 'الآيات',
     'tool.style': 'النمط',
     'share': 'مشاركة',
+
+    'nav.card': 'البطاقة',
+    'nav.export': 'تصدير',
+    'nav.canvas': 'المقاس',
+    'nav.canvasSub': 'مقاس اللوحة وخط المصحف',
 
     'theme.toDark': 'التبديل إلى الوضع الداكن',
     'theme.toLight': 'التبديل إلى الوضع الفاتح',

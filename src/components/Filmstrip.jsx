@@ -3,27 +3,27 @@ import { getPreset, bgStyle, effectiveStyle } from '../studio'
 import CaptionFrame from './CaptionFrame'
 
 export default function Filmstrip() {
-  const { state, t, actions } = useStudio()
+  const { state, t, actions, mobile } = useStudio()
   const g = state.global
   const p = getPreset(state)
   const cards = state.cards.length ? state.cards : [{ tokens: [], override: null }]
   const sel = Math.min(state.sel, cards.length - 1)
 
-  const boxH = 58
-  const boxW = Math.max(28, Math.round((58 * p.w) / p.h))
+  const boxH = mobile ? 46 : 58
+  const boxW = Math.max(24, Math.round((boxH * p.w) / p.h))
   const miniScale = boxH / p.h
 
   return (
     <div
       style={{
         flex: 'none',
-        height: 112,
+        height: mobile ? 88 : 112,
         background: t.panel,
         borderTop: `1px solid ${t.border}`,
         display: 'flex',
         alignItems: 'center',
-        gap: 12,
-        padding: '0 18px',
+        gap: mobile ? 10 : 12,
+        padding: mobile ? '0 14px' : '0 18px',
         overflowX: 'auto',
         overflowY: 'hidden',
       }}

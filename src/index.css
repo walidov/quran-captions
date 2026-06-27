@@ -104,6 +104,24 @@ input.dualrange::-moz-range-thumb {
   cursor: grab;
 }
 
+/* Mobile bottom-sheet entrance */
+@keyframes sheetUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes sheetFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 /* Custom select chevron */
 select {
   -webkit-appearance: none;

@@ -5,21 +5,50 @@ import VersesPanel from './components/panels/VersesPanel'
 import StylePanel from './components/panels/StylePanel'
 import Stage from './components/Stage'
 import CardInspector from './components/CardInspector'
+import MobileShell from './components/MobileShell'
 import Toast from './components/Toast'
 import Modal from './components/Modal'
 import ShareModal from './components/ShareModal'
 import DonateModal from './components/DonateModal'
 import ExportLayer from './components/ExportLayer'
 
-function Studio() {
+function DesktopBody() {
   const { state, t, rtl } = useStudio()
+  return (
+    <div style={{ flex: 1, display: 'flex', minHeight: 0 }}>
+      <LeftRail />
+
+      <div
+        style={{
+          width: 300,
+          flex: 'none',
+          background: t.panel,
+          [rtl ? 'borderLeft' : 'borderRight']: `1px solid ${t.border}`,
+          display: 'flex',
+          flexDirection: 'column',
+          overflow: 'hidden',
+        }}
+      >
+        {state.tool === 'verses' && <VersesPanel />}
+        {state.tool === 'text' && <StylePanel />}
+      </div>
+
+      <Stage />
+
+      <CardInspector />
+    </div>
+  )
+}
+
+function Studio() {
+  const { t, rtl, mobile } = useStudio()
 
   return (
     <div
       dir={rtl ? 'rtl' : 'ltr'}
       style={{
-        height: '100vh',
-        width: '100vw',
+        height: '100dvh',
+        width: '100%',
         position: 'relative',
         overflow: 'hidden',
         display: 'flex',
@@ -31,28 +60,7 @@ function Studio() {
     >
       <TopBar />
 
-      <div style={{ flex: 1, display: 'flex', minHeight: 0 }}>
-        <LeftRail />
-
-        <div
-          style={{
-            width: 300,
-            flex: 'none',
-            background: t.panel,
-            [rtl ? 'borderLeft' : 'borderRight']: `1px solid ${t.border}`,
-            display: 'flex',
-            flexDirection: 'column',
-            overflow: 'hidden',
-          }}
-        >
-          {state.tool === 'verses' && <VersesPanel />}
-          {state.tool === 'text' && <StylePanel />}
-        </div>
-
-        <Stage />
-
-        <CardInspector />
-      </div>
+      {mobile ? <MobileShell /> : <DesktopBody />}
 
       <Toast />
       <Modal />

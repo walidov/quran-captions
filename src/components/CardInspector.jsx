@@ -5,7 +5,7 @@ import { Toggle, sectionLabel } from './ui'
 import Range from './Range'
 
 export default function CardInspector() {
-  const { state, t, actions, tr, rtl } = useStudio()
+  const { state, t, actions, tr, rtl, mobile } = useStudio()
   const g = state.global
   const label = sectionLabel(t)
 
@@ -88,10 +88,11 @@ export default function CardInspector() {
   return (
     <div
       style={{
-        width: 328,
+        width: mobile ? '100%' : 328,
         flex: 'none',
+        height: '100%',
         background: t.panel,
-        [rtl ? 'borderRight' : 'borderLeft']: `1px solid ${t.border}`,
+        [rtl ? 'borderRight' : 'borderLeft']: mobile ? 'none' : `1px solid ${t.border}`,
         display: 'flex',
         flexDirection: 'column',
         overflow: 'hidden',
