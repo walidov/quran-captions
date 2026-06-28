@@ -50,6 +50,7 @@ const MESSAGES = {
     'style.subtitle': 'Global look · applies to all inheriting cards',
     'style.fontSize': 'FONT SIZE',
     'style.color': 'FONT COLOR',
+    'style.colorBaked': 'This font has tajweed colors built into the glyphs, so the font color doesn’t apply.',
     'style.maxLines': 'MAX LINES PER CARD',
     'style.lineHeight': 'LINE HEIGHT',
     'style.border': 'BORDER',
@@ -70,6 +71,8 @@ const MESSAGES = {
     'card.lastWord': 'Last word of current card',
     'card.prev': 'To prev card',
     'card.next': 'To next card',
+    'word.movePrev': 'Move to previous card',
+    'word.moveNext': 'Move to next card',
     'card.exportPng': 'Export only this card',
     'card.delete': 'Delete this card',
 
@@ -144,6 +147,7 @@ const MESSAGES = {
     'style.subtitle': 'المظهر العام · يُطبَّق على كل البطاقات الوارثة',
     'style.fontSize': 'حجم الخط',
     'style.color': 'لون الخط',
+    'style.colorBaked': 'هذا الخط يتضمّن ألوان التجويد داخل الحروف، لذا لا يُطبَّق لون الخط.',
     'style.maxLines': 'أقصى عدد أسطر للبطاقة',
     'style.lineHeight': 'ارتفاع السطر',
     'style.border': 'الحدود',
@@ -164,6 +168,8 @@ const MESSAGES = {
     'card.lastWord': 'آخر كلمة في البطاقة الحالية',
     'card.prev': 'إلى السابقة',
     'card.next': 'إلى التالية',
+    'word.movePrev': 'نقل إلى البطاقة السابقة',
+    'word.moveNext': 'نقل إلى البطاقة التالية',
     'card.exportPng': 'تصدير هذه البطاقة فقط',
     'card.delete': 'حذف هذه البطاقة',
 

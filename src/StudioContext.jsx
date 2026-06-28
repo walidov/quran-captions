@@ -71,6 +71,7 @@ const INITIAL = {
     qcf1: { text: 'بِسْمِ', family: 'UthmanicHafs' },
     uthmani: { text: 'بِسْمِ', family: 'UthmanicHafs' },
     indopak: { text: 'بِسْمِ', family: 'IndoPak' },
+    qcf4: { text: 'بِسْمِ', family: 'UthmanicHafs' },
   },
 
   // Calligraphic surah-name font readiness — until it loads we show the plain
@@ -95,6 +96,7 @@ export function StudioProvider({ children }) {
   const stateRef = useRef(state)
   const loadReq = useRef(0)
   const toastTimer = useRef(null)
+  const prevSource = useRef(null) // last {surahNum, fromAyah, toAyah} — to keep the verse on font change
   stateRef.current = state
 
   const patch = useCallback(
@@ -174,6 +176,20 @@ export function StudioProvider({ children }) {
   useEffect(() => {
     let cancelled = false
     const id = ++loadReq.current
+    // Keep the user on the same ayah when only the font (or ornament) changes —
+    // the verses are identical, just re-rendered and re-split. Reset to the
+    // first card only when the source (surah or ayah range) actually changes.
+    const cur = { surahNum: state.surahNum, fromAyah: state.fromAyah, toAyah: state.toAyah }
+    const prev = prevSource.current
+    const sourceChanged =
+      !prev ||
+      prev.surahNum !== cur.surahNum ||
+      prev.fromAyah !== cur.fromAyah ||
+      prev.toAyah !== cur.toAyah
+    prevSource.current = cur
+    const keepAyah = sourceChanged
+      ? null
+      : stateRef.current.cards[stateRef.current.sel]?.tokens?.[0]?.ayah
     setState((s) => ({ ...s, loadStatus: 'loading' }))
     ;(async () => {
       try {
@@ -195,7 +211,12 @@ export function StudioProvider({ children }) {
             contentWidth: contentWidthFor(getPreset(s).w),
             linesPerCard: s.global.linesPerCard,
           })
-          return { ...s, loadStatus: 'ready', fontEmbedCss, cards, sel: 0 }
+          let sel = 0
+          if (keepAyah != null) {
+            const idx = cards.findIndex((c) => c.tokens[0]?.ayah === keepAyah)
+            if (idx >= 0) sel = idx
+          }
+          return { ...s, loadStatus: 'ready', fontEmbedCss, cards, sel }
         })
       } catch (e) {
         if (cancelled || id !== loadReq.current) return
@@ -256,16 +277,22 @@ export function StudioProvider({ children }) {
     state.global,
   ])
 
-  // Re-split the current token stream into cards using the latest settings.
-  const resplitState = (s) => ({
-    ...s,
-    sel: 0,
-    cards: splitIntoCards(streamRef.current, {
+  // Re-split the current token stream into cards using the latest settings,
+  // keeping the user on the same ayah they were viewing.
+  const resplitState = (s) => {
+    const keepAyah = s.cards[s.sel]?.tokens?.[0]?.ayah
+    const cards = splitIntoCards(streamRef.current, {
       fontSize: s.global.size,
       contentWidth: contentWidthFor(getPreset(s).w),
       linesPerCard: s.global.linesPerCard,
-    }),
-  })
+    })
+    let sel = 0
+    if (keepAyah != null) {
+      const idx = cards.findIndex((c) => c.tokens[0]?.ayah === keepAyah)
+      if (idx >= 0) sel = idx
+    }
+    return { ...s, sel, cards }
+  }
 
   // How many lines a token set wraps into at the current canvas width.
   const cardLines = (s, tokens, fontSize) =>
@@ -310,13 +337,16 @@ export function StudioProvider({ children }) {
   const setSize = (v) =>
     setState((s) => {
       const nv = +v
+      const next = { ...s, global: { ...s.global, size: nv } }
+      // Growing the font can push a card past its line budget — instead of
+      // blocking with a modal, re-flow the verses into more cards at the new size.
       if (nv > s.global.size) {
         const exceeds = s.cards.some(
-          (c) => cardLines(s, c.tokens, c.override?.size ?? nv) > s.global.linesPerCard,
+          (c) => cardLines(next, c.tokens, c.override?.size ?? nv) > next.global.linesPerCard,
         )
-        if (exceeds) return { ...s, modal: overLimitModal(s) }
+        if (exceeds) return resplitState(next)
       }
-      return { ...s, global: { ...s.global, size: nv } }
+      return next
     })
   const setColor = (c) => setGlobal('color', c)
   const setLineHeight = (v) => setGlobal('lineHeight', +v)

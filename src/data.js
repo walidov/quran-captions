@@ -75,6 +75,8 @@ export const FONTS = [
   { key: 'qcf1', label: 'QCF1', sub: 'Madani v1' },
   { key: 'indopak', label: 'IndoPak', sub: 'Naskh' },
   { key: 'uthmani', label: 'Uthmanic', sub: 'Hafs' },
+  // Per-page COLOR font — tajweed colors baked into the glyphs (COLR/CPAL).
+  { key: 'qcf4', label: 'QPC V4', sub: 'Tajweed' },
 ]
 
 export const COLORS = ['#FFFFFF', '#111114', '#F4D58D', '#D4A437', '#1F8A5B', '#1E66D0']

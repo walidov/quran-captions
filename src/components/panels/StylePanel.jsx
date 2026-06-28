@@ -40,13 +40,30 @@ export default function StylePanel() {
 
       {/* Color */}
       <div style={{ ...label, marginBottom: 9 }}>{tr('style.color')}</div>
-      <Swatches
-        colors={COLORS}
-        current={g.color}
-        onPick={actions.setColor}
-        custom={g.color}
-        onCustom={actions.setColor}
-      />
+      {g.font === 'qcf4' ? (
+        <div
+          style={{
+            padding: '11px 12px',
+            borderRadius: 10,
+            background: t.panel2,
+            border: `1px dashed ${t.border}`,
+            fontWeight: 500,
+            fontSize: 11,
+            lineHeight: 1.5,
+            color: t.sub,
+          }}
+        >
+          {tr('style.colorBaked')}
+        </div>
+      ) : (
+        <Swatches
+          colors={COLORS}
+          current={g.color}
+          onPick={actions.setColor}
+          custom={g.color}
+          onCustom={actions.setColor}
+        />
+      )}
 
       <div style={sep} />
 

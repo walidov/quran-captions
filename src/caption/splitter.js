@@ -9,6 +9,10 @@
 
 const SPACE_EM = 0.25 // matches ayah-share's spaceWidth
 
+// Rendered width (px) of a word unit (word + optional glued ayah ornament).
+const unitWidth = (unit, fontSize) =>
+  unit.reduce((w, tk, i) => w + (tk.unit ?? 0) * fontSize + (i > 0 ? SPACE_EM * fontSize : 0), 0)
+
 // Group tokens into "word units": each ayah-end ornament (isEnd) is attached to
 // the word directly before it, so a verse number is never treated as a separate
 // word — it stays glued to its word when wrapping, moving, and counting.
@@ -26,14 +30,11 @@ export function groupUnits(tokens) {
 // units (word + its ayah ornament) never break across lines.
 export function wrapTokens(tokens, fontSize, contentWidth) {
   const units = groupUnits(tokens)
-  const unitWidth = (u) =>
-    u.reduce((w, tk, i) => w + (tk.unit ?? 0) * fontSize + (i > 0 ? SPACE_EM * fontSize : 0), 0)
-
   const lines = []
   let current = []
   let used = 0
   for (const u of units) {
-    const w = unitWidth(u)
+    const w = unitWidth(u, fontSize)
     const add = current.length === 0 ? w : SPACE_EM * fontSize + w
     if (current.length > 0 && used + add > contentWidth) {
       lines.push(current)
@@ -53,6 +54,64 @@ export function wrapTokens(tokens, fontSize, contentWidth) {
 // A verse only spills into additional cards when its wrapped lines exceed
 // `linesPerCard` — i.e. it's too long to fit the allowed size. The user can
 // still nudge boundary words between any cards afterward.
+// How many of units[start..] fit within `maxLines` lines at the given width.
+function unitsFitting(units, start, fontSize, contentWidth, maxLines) {
+  let lines = 1
+  let used = 0
+  let count = 0
+  for (let j = start; j < units.length; j++) {
+    const w = unitWidth(units[j], fontSize)
+    const add = used === 0 ? w : SPACE_EM * fontSize + w
+    if (used > 0 && used + add > contentWidth) {
+      lines++
+      if (lines > maxLines) break
+      used = w
+    } else {
+      used += add
+    }
+    count++
+  }
+  return count
+}
+
+// Distribute a verse's word units into exactly K cards, as evenly as possible by
+// count, never exceeding `linesPerCard` lines per card. Returns null when K is
+// too small (units left over) so the caller can retry with one more card.
+function distributeEven(units, K, fontSize, contentWidth, linesPerCard) {
+  const n = units.length
+  const groups = []
+  let i = 0
+  for (let c = 0; c < K; c++) {
+    const remCards = K - c
+    const remUnits = n - i
+    if (remUnits < remCards) return null // can't fill K non-empty cards
+    const fit = unitsFitting(units, i, fontSize, contentWidth, linesPerCard)
+    const fitCap = fit > 0 ? fit : 1 // a lone oversized unit still gets its own card
+    const target = Math.ceil(remUnits / remCards) // even share of what remains
+    const maxTake = remUnits - (remCards - 1) // leave ≥1 unit for each later card
+    const take = Math.max(1, Math.min(target, fitCap, maxTake))
+    groups.push(units.slice(i, i + take))
+    i += take
+  }
+  return i === n ? groups : null // leftover ⇒ K too small
+}
+
+// Split one verse into one or more cards. When it doesn't fit in a single card,
+// its words are spread evenly across the fewest cards that hold them — so we
+// never get one full card followed by a card holding just a word or two.
+function splitVerse(verseTokens, fontSize, contentWidth, linesPerCard) {
+  const units = groupUnits(verseTokens)
+  if (units.length === 0) return [verseTokens]
+  const greedyLines = wrapTokens(verseTokens, fontSize, contentWidth).length
+  if (greedyLines <= linesPerCard) return [verseTokens]
+  const minCards = Math.max(2, Math.ceil(greedyLines / linesPerCard))
+  for (let K = minCards; K <= units.length; K++) {
+    const groups = distributeEven(units, K, fontSize, contentWidth, linesPerCard)
+    if (groups) return groups.map((g) => g.flat())
+  }
+  return units.map((u) => u.slice()) // fallback: one unit per card
+}
+
 export function splitIntoCards(tokens, { fontSize, contentWidth, linesPerCard }) {
   // Group the stream into contiguous per-verse runs. Every token carries its
   // verseKey (the ayah-end ornament included), so a verse's marker stays with it.
@@ -69,9 +128,8 @@ export function splitIntoCards(tokens, { fontSize, contentWidth, linesPerCard })
 
   const cards = []
   for (const verseTokens of verses) {
-    const lines = wrapTokens(verseTokens, fontSize, contentWidth)
-    for (let i = 0; i < lines.length; i += linesPerCard) {
-      cards.push({ tokens: lines.slice(i, i + linesPerCard).flat(), override: null })
+    for (const cardTokens of splitVerse(verseTokens, fontSize, contentWidth, linesPerCard)) {
+      cards.push({ tokens: cardTokens, override: null })
     }
   }
   if (!cards.length) cards.push({ tokens: [], override: null })
