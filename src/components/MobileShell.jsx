@@ -128,6 +128,8 @@ export default function MobileShell() {
           borderTop: `1px solid ${t.border}`,
           paddingBottom: 'env(safe-area-inset-bottom, 0px)',
           zIndex: 6,
+          userSelect: 'none',
+          WebkitUserSelect: 'none',
         }}
       >
         {items.map((it) => (

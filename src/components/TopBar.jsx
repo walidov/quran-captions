@@ -97,7 +97,10 @@ export default function TopBar() {
             fontSize: mobile ? 15 : 17,
             color: t.text,
             letterSpacing: '-.01em',
-            lineHeight: 1.1,
+            // Taller line box + a little vertical room so Arabic glyphs (the
+            // hamza/madda above, descenders below) aren't clipped by overflow.
+            lineHeight: 1.4,
+            padding: '2px 0',
             whiteSpace: 'nowrap',
             overflow: 'hidden',
             textOverflow: 'ellipsis',

@@ -9,7 +9,7 @@ export default function Filmstrip() {
   const cards = state.cards.length ? state.cards : [{ tokens: [], override: null }]
   const sel = Math.min(state.sel, cards.length - 1)
 
-  const boxH = mobile ? 46 : 58
+  const boxH = mobile ? 144 : 58
   const boxW = Math.max(24, Math.round((boxH * p.w) / p.h))
   const miniScale = boxH / p.h
 
@@ -17,12 +17,12 @@ export default function Filmstrip() {
     <div
       style={{
         flex: 'none',
-        height: mobile ? 88 : 112,
+        height: mobile ? 200 : 112,
         background: t.panel,
         borderTop: `1px solid ${t.border}`,
         display: 'flex',
         alignItems: 'center',
-        gap: mobile ? 10 : 12,
+        gap: 12,
         padding: mobile ? '0 14px' : '0 18px',
         overflowX: 'auto',
         overflowY: 'hidden',
