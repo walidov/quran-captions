@@ -308,10 +308,13 @@ export function StudioProvider({ children }) {
   const toggleLocale = () => patch((s) => ({ locale: s.locale === 'en' ? 'ar' : 'en' }))
   const setTool = (tool) => patch({ tool })
 
-  const setPreset = (presetKey) => patch({ presetKey })
+  // The canvas width drives how verses wrap, so changing the platform/size
+  // re-splits the cards for the new dimensions (keeping the current ayah).
+  const setPreset = (presetKey) => setState((s) => resplitState({ ...s, presetKey }))
   const setCustom = (dim, v) => {
     const val = clamp(parseInt(v, 10) || 0, 200, 4096)
-    patch(dim === 'w' ? { customW: val } : { customH: val })
+    if (dim === 'w') setState((s) => resplitState({ ...s, customW: val }))
+    else patch({ customH: val }) // height doesn't affect wrapping
   }
 
   const setSurah = (num) =>
