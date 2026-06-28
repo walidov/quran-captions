@@ -11,6 +11,7 @@ import Modal from './components/Modal'
 import ShareModal from './components/ShareModal'
 import DonateModal from './components/DonateModal'
 import ExportLayer from './components/ExportLayer'
+import Tour from './components/Tour'
 
 function DesktopBody() {
   const { state, t, rtl } = useStudio()
@@ -19,6 +20,7 @@ function DesktopBody() {
       <LeftRail />
 
       <div
+        data-tour="leftpanel"
         style={{
           width: 300,
           flex: 'none',
@@ -67,6 +69,7 @@ function Studio() {
       <ShareModal />
       <DonateModal />
       <ExportLayer />
+      <Tour />
     </div>
   )
 }

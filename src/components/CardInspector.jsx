@@ -126,7 +126,10 @@ export default function CardInspector() {
 
       <div style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', padding: 16 }}>
         {/* Override toggle */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10 }}>
+        <div
+          data-tour="card-size"
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10 }}
+        >
           <div>
             <div style={{ fontWeight: 700, fontSize: 12.5, color: t.text }}>{tr('card.customSize')}</div>
             <div style={{ fontWeight: 500, fontSize: 10.5, color: t.faint, marginTop: 1 }}>
@@ -201,6 +204,7 @@ export default function CardInspector() {
         <div style={{ height: 1, background: t.line, margin: '18px -16px' }} />
 
         {/* Adjust words */}
+        <div data-tour="adjust">
         <div style={{ fontWeight: 700, fontSize: 12.5, color: t.text }}>{tr('card.adjustWords')}</div>
         <div style={{ fontWeight: 500, fontSize: 10.5, color: t.faint, marginTop: 2 }}>
           {tr('card.adjustHelp')}
@@ -291,6 +295,7 @@ export default function CardInspector() {
             </button>
           </div>
         </div>
+        </div>
 
         <div style={{ height: 1, background: t.line, margin: '18px -16px' }} />
 
@@ -356,7 +361,7 @@ export default function CardInspector() {
       </div>
 
       {/* Export all — pinned footer */}
-      <div style={{ flex: 'none', padding: 14, borderTop: `1px solid ${t.line}` }}>
+      <div data-tour="export" style={{ flex: 'none', padding: 14, borderTop: `1px solid ${t.line}` }}>
         <button
           onClick={actions.doExportAll}
           disabled={state.exporting || state.loadStatus !== 'ready'}

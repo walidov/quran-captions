@@ -195,7 +195,7 @@ export default function HeaderControls() {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
       {/* Canvas size */}
-      <div style={group}>
+      <div style={group} data-tour="size">
         <ScreenIcon color={t.sub} />
         <Field
           t={t}
@@ -231,7 +231,7 @@ export default function HeaderControls() {
       <div style={{ width: 1, height: 24, background: t.border, flex: 'none' }} />
 
       {/* Quranic font */}
-      <div style={group}>
+      <div style={group} data-tour="font">
         <FontIcon color={t.sub} />
         <Field
           t={t}

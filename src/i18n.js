@@ -90,6 +90,28 @@ const MESSAGES = {
     'share.subtitle': 'Share it with anyone who makes Qur’an recitation videos.',
     'share.copy': 'Copy link',
     'share.copied': 'Copied!',
+    'tour.next': 'Next',
+    'tour.prev': 'Back',
+    'tour.done': 'Got it',
+    'tour.size.title': 'Pick a canvas size',
+    'tour.size.desc': 'Choose the dimensions for your platform — YouTube, Reels, Square and more.',
+    'tour.font.title': 'Choose a Qur’an font',
+    'tour.font.desc':
+      'Switch between Madani (QCF), IndoPak, Uthmani — or the colored QPC V4 Tajweed script.',
+    'tour.verses.title': 'Select your verses',
+    'tour.verses.desc': 'Pick the surah and the ayah range you want to caption.',
+    'tour.style.title': 'Style the text',
+    'tour.style.desc':
+      'Adjust font size, color, line height and lines per card to match your video.',
+    'tour.adjust.title': 'Fine-tune the word breaks',
+    'tour.adjust.desc':
+      'Move a boundary word to the next or previous card with these buttons — or click the first/last word directly on the preview.',
+    'tour.cardSize.title': 'Resize a single card',
+    'tour.cardSize.desc': 'Give one card its own font size without affecting the others.',
+    'tour.export.title': 'Export your captions',
+    'tour.export.desc':
+      'Download every card as transparent PNGs in a ZIP — or use “Export only this card” for a single one.',
+
     'donate': 'Donate',
     'donate.title': 'Support Quran Captions',
     'donate.body':
@@ -187,6 +209,26 @@ const MESSAGES = {
     'share.subtitle': 'شاركه مع كل من يصنع مقاطع تلاوة القرآن.',
     'share.copy': 'نسخ الرابط',
     'share.copied': 'تم النسخ!',
+    'tour.next': 'التالي',
+    'tour.prev': 'السابق',
+    'tour.done': 'تمام',
+    'tour.size.title': 'اختر مقاس اللوحة',
+    'tour.size.desc': 'اختر الأبعاد المناسبة لمنصتك — يوتيوب، ريلز، مربّع وغيرها.',
+    'tour.font.title': 'اختر خط المصحف',
+    'tour.font.desc': 'بدّل بين المدني (QCF) والإندوباك والعثماني — أو خط QPC V4 الملوّن بالتجويد.',
+    'tour.verses.title': 'اختر الآيات',
+    'tour.verses.desc': 'اختر السورة ونطاق الآيات التي تريد عرضها.',
+    'tour.style.title': 'نسّق النص',
+    'tour.style.desc': 'اضبط حجم الخط واللون وارتفاع السطر وعدد الأسطر لكل بطاقة.',
+    'tour.adjust.title': 'اضبط فواصل الكلمات',
+    'tour.adjust.desc':
+      'انقل كلمة حدودية إلى البطاقة التالية أو السابقة بهذه الأزرار — أو انقر أول/آخر كلمة مباشرةً على المعاينة.',
+    'tour.cardSize.title': 'حجم خط لبطاقة واحدة',
+    'tour.cardSize.desc': 'امنح بطاقة واحدة حجم خط خاصًا بها دون التأثير على البقية.',
+    'tour.export.title': 'صدّر الكابشنز',
+    'tour.export.desc':
+      'نزّل كل البطاقات كصور PNG شفافة في ملف ZIP — أو استخدم «تصدير هذه البطاقة فقط» لبطاقة واحدة.',
+
     'donate': 'تبرّع',
     'donate.title': 'ادعم قرآن كابشنز',
     'donate.body':
