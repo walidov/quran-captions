@@ -340,16 +340,9 @@ export function StudioProvider({ children }) {
   const setSize = (v) =>
     setState((s) => {
       const nv = +v
-      const next = { ...s, global: { ...s.global, size: nv } }
-      // Growing the font can push a card past its line budget — instead of
-      // blocking with a modal, re-flow the verses into more cards at the new size.
-      if (nv > s.global.size) {
-        const exceeds = s.cards.some(
-          (c) => cardLines(next, c.tokens, c.override?.size ?? nv) > next.global.linesPerCard,
-        )
-        if (exceeds) return resplitState(next)
-      }
-      return next
+      // Font size drives wrapping, so any change — larger or smaller — re-flows
+      // the verses into cards for the new size (keeping the current ayah).
+      return nv === s.global.size ? s : resplitState({ ...s, global: { ...s.global, size: nv } })
     })
   const setColor = (c) => setGlobal('color', c)
   const setLineHeight = (v) => setGlobal('lineHeight', +v)
