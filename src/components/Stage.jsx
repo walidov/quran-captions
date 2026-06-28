@@ -109,6 +109,8 @@ export default function Stage() {
             borderRadius: 8,
             padding: '0 9px',
             zIndex: 3,
+            userSelect: 'none',
+            WebkitUserSelect: 'none',
           }}
         >
           {(preset.platforms || []).length > 0 && (
@@ -138,6 +140,7 @@ export default function Stage() {
             padding: '0 8px',
             zIndex: 3,
             userSelect: 'none',
+            WebkitUserSelect: 'none',
           }}
         >
           {/* eye = "hold to preview" affordance */}
