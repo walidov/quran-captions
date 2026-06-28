@@ -10,20 +10,20 @@ import MobileSheet from './MobileSheet'
 // Bottom-nav icons --------------------------------------------------------
 function VersesGlyph() {
   return (
-    <span style={{ fontSize: 22, lineHeight: 1, fontFamily: "'Amiri', 'UthmanicHafs', serif" }}>۝</span>
+    <span style={{ fontSize: 24, lineHeight: 1, fontFamily: "'Amiri', 'UthmanicHafs', serif" }}>۝</span>
   )
 }
 function StyleGlyph() {
   return (
     <span style={{ display: 'inline-flex', alignItems: 'baseline', gap: 1, lineHeight: 1, fontFamily: "'Amiri', serif" }}>
-      <span style={{ fontSize: 19, fontWeight: 700 }}>ع</span>
-      <span style={{ fontSize: 12, fontWeight: 700 }}>ع</span>
+      <span style={{ fontSize: 21, fontWeight: 700 }}>ع</span>
+      <span style={{ fontSize: 13, fontWeight: 700 }}>ع</span>
     </span>
   )
 }
 function CanvasGlyph() {
   return (
-    <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
       <rect x="2.5" y="4" width="19" height="13" rx="2.2" />
       <path d="M8.5 20.5h7" />
       <path d="M12 17.2v3.3" />
@@ -32,7 +32,7 @@ function CanvasGlyph() {
 }
 function CardGlyph() {
   return (
-    <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
       <rect x="3" y="5" width="13" height="15" rx="2" />
       <path d="M8 3.5h10A1.5 1.5 0 0 1 19.5 5v12" />
     </svg>
@@ -40,7 +40,7 @@ function CardGlyph() {
 }
 function ExportGlyph() {
   return (
-    <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
       <path d="M16 3.5h2.5A1.5 1.5 0 0 1 20 5v10" />
       <rect x="3.5" y="6.5" width="12" height="14" rx="1.8" />
       <path d="M9.5 10.5v5" />
@@ -84,15 +84,14 @@ export default function MobileShell() {
       minWidth: 0,
       display: 'flex',
       flexDirection: 'column',
-      alignItems: 'center',
-      gap: 4,
-      padding: '9px 2px',
+      alignItems: 'stretch',
+      padding: '8px 2px 10px',
       border: 0,
       background: 'transparent',
       cursor: it.disabled ? 'not-allowed' : 'pointer',
       fontFamily: 'inherit',
       fontWeight: 600,
-      fontSize: 9.5,
+      fontSize: 10.5,
       letterSpacing: '.01em',
       opacity: it.disabled ? 0.45 : 1,
       color: active || accent ? t.accent : t.sub,
@@ -141,8 +140,18 @@ export default function MobileShell() {
             aria-label={it.label}
             style={navBtn(it)}
           >
-            {it.icon}
-            <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '100%' }}>
+            <span style={{ flex: 1, minHeight: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              {it.icon}
+            </span>
+            <span
+              style={{
+                marginTop: 4,
+                textAlign: 'center',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}
+            >
               {it.label}
             </span>
           </button>

@@ -65,15 +65,15 @@ export default function CardInspector() {
   })
 
   const navBtn = {
-    width: 30,
-    height: 30,
+    width: mobile ? 38 : 30,
+    height: mobile ? 38 : 30,
     flex: 'none',
     border: `1px solid ${t.border}`,
-    borderRadius: 8,
+    borderRadius: mobile ? 10 : 8,
     background: t.panel2,
     color: t.text,
     cursor: 'pointer',
-    fontSize: 16,
+    fontSize: mobile ? 20 : 16,
     lineHeight: 1,
   }
 

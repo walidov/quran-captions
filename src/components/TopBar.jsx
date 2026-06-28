@@ -2,17 +2,17 @@ import { useStudio } from '../StudioContext'
 import Logo from './Logo'
 import HeaderControls from './HeaderControls'
 
-function SunIcon() {
+function SunIcon({ size = 18 }) {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="12" cy="12" r="4" />
       <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
     </svg>
   )
 }
-function MoonIcon() {
+function MoonIcon({ size = 18 }) {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
       <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
     </svg>
   )
@@ -22,8 +22,8 @@ export default function TopBar() {
   const { state, t, actions, tr, mobile } = useStudio()
 
   const iconBtn = {
-    height: mobile ? 34 : 38,
-    width: mobile ? 34 : undefined,
+    height: mobile ? 37 : 38,
+    width: mobile ? 37 : undefined,
     flex: 'none',
     display: 'flex',
     alignItems: 'center',
@@ -42,9 +42,10 @@ export default function TopBar() {
       onClick={actions.toggleTheme}
       aria-label={tr(state.theme === 'light' ? 'theme.toDark' : 'theme.toLight')}
       title={tr(state.theme === 'light' ? 'theme.toDark' : 'theme.toLight')}
-      style={{ ...iconBtn, width: mobile ? 34 : 38, padding: 0 }}
+      style={{ ...iconBtn, width: mobile ? 37 : 38, padding: 0 }}
     >
-      {state.theme === 'light' ? <SunIcon /> : <MoonIcon />}
+      {/* Show the target mode (what a click switches to), not the current one. */}
+      {state.theme === 'light' ? <MoonIcon size={mobile ? 20 : 18} /> : <SunIcon size={mobile ? 20 : 18} />}
     </button>
   )
 
@@ -53,11 +54,12 @@ export default function TopBar() {
       onClick={actions.toggleLocale}
       aria-label={tr('lang.switch')}
       title={tr('lang.switch')}
-      style={mobile ? { ...iconBtn, width: 34, padding: 0 } : iconBtn}
+      style={mobile ? { ...iconBtn, width: 37, padding: 0 } : iconBtn}
     >
+      {/* Show the language a click switches to, not the current one. */}
       {mobile ? (
-        <span style={{ fontWeight: 700, fontSize: 12.5, color: t.text }}>
-          {state.locale === 'en' ? 'EN' : 'ع'}
+        <span style={{ fontWeight: 700, fontSize: 14, color: t.text }}>
+          {state.locale === 'en' ? 'ع' : 'EN'}
         </span>
       ) : (
         <>
@@ -67,7 +69,7 @@ export default function TopBar() {
             <path d="M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18Z" />
           </svg>
           <span style={{ fontWeight: 700, fontSize: 12.5, color: t.text }}>
-            {state.locale === 'en' ? 'EN' : 'ع'}
+            {state.locale === 'en' ? 'ع' : 'EN'}
           </span>
         </>
       )}
@@ -78,23 +80,23 @@ export default function TopBar() {
     <div style={{ display: 'flex', alignItems: 'center', gap: 10, minWidth: 0 }}>
       <div
         style={{
-          width: mobile ? 32 : 36,
-          height: mobile ? 32 : 36,
+          width: mobile ? 35 : 36,
+          height: mobile ? 35 : 36,
           flex: 'none',
-          borderRadius: mobile ? 10 : 11,
+          borderRadius: 11,
           background: t.accent,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
         }}
       >
-        <Logo size={mobile ? 22 : 25} color="#fff" />
+        <Logo size={mobile ? 24 : 25} color="#fff" />
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
         <div
           style={{
             fontWeight: 800,
-            fontSize: mobile ? 15 : 17,
+            fontSize: mobile ? 16.5 : 17,
             color: t.text,
             letterSpacing: '-.01em',
             // Taller line box + a little vertical room so Arabic glyphs (the
@@ -129,11 +131,11 @@ export default function TopBar() {
     return (
       <div
         style={{
-          height: 56,
+          height: 62,
           flex: 'none',
           display: 'flex',
           alignItems: 'center',
-          gap: 8,
+          gap: 9,
           padding: '0 12px',
           background: t.topbar,
           borderBottom: `1px solid ${t.border}`,
@@ -146,9 +148,9 @@ export default function TopBar() {
           onClick={actions.openDonate}
           aria-label={tr('donate')}
           title={tr('donate.title')}
-          style={{ ...iconBtn, width: 34, padding: 0 }}
+          style={{ ...iconBtn, width: 37, padding: 0 }}
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z" />
           </svg>
         </button>
@@ -156,9 +158,9 @@ export default function TopBar() {
           onClick={actions.openShare}
           aria-label={tr('share')}
           title={tr('share.title')}
-          style={{ ...iconBtn, width: 34, padding: 0 }}
+          style={{ ...iconBtn, width: 37, padding: 0 }}
         >
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="18" cy="5" r="3" />
             <circle cx="6" cy="12" r="3" />
             <circle cx="18" cy="19" r="3" />

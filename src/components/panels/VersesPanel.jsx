@@ -17,7 +17,7 @@ export default function VersesPanel() {
   )
   const cardCount = state.cards.length
 
-  const label = { fontWeight: 700, fontSize: 10, letterSpacing: '.06em', color: t.faint }
+  const label = { fontWeight: 700, fontSize: 12, letterSpacing: '.06em', color: t.faint }
 
   return (
     <div

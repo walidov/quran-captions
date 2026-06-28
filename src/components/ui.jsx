@@ -86,7 +86,7 @@ export function Swatches({ colors, current, onPick, size = 30, gap = 9, custom, 
 
 export const sectionLabel = (t) => ({
   fontWeight: 700,
-  fontSize: 10,
+  fontSize: 12,
   letterSpacing: '.06em',
   color: t.faint,
 })
